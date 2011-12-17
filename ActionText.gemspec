@@ -5,16 +5,15 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ActionText}
-  s.version = "0.0.5"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Maximilian Stroh}]
-  s.date = %q{2011-12-16}
+  s.date = %q{2011-12-17}
   s.description = %q{still under construction!}
   s.email = %q{hisako1337@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README",
     "README.rdoc"
   ]
   s.files = [
@@ -26,7 +25,6 @@ Gem::Specification.new do |s|
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README",
     "README.rdoc",
     "Rakefile",
     "VERSION",
