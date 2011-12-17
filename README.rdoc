@@ -1,6 +1,22 @@
 = action_text
 
-Description goes here.
+In Webapplications, Rails-apps or other Content-Management-systems often you have to deal with Strings. But, 
+in most cases, you have to write many little helper functions for formatting, validations, searches, and so on. 
+In fact, you want your Strings to behave as if they were <em>Texts<em>! A Text is not just an array of characters
+(this is what a String is meant to be!), it has a common structure, even punctuation (which matters!). Do you have to mess
+with webcrawlers to find nasty duplicated content? Or a limited database where redundant records matters? Or simply want
+to count the words in a Text? If you are using such kind of "Text"-Strings or functionality often, have a look which functionality ActionText 
+offers to you: 
+- Build nice looking sentences from ugly formatted strings.
+- Check if other strings or even words or whole sentences are included in the text. 
+- compare texts for similarity (not just equality!). Very useful if you don't want texts
+  that are too similar! In addition, you can fluently set the grad of accuracy. 
+- Ask the text if it is a valid type, eg. if it is a valid email-adress or url. 
+- As this gem is developed for usage in Germany, of course the german 'umlauts' are handled
+  naturally. 
+
+ANNOTATION: 
+- As this gem is still under heavy development, feel free to make suggestions how a Text should behave for you! :)
 
 == Contributing to action_text
  

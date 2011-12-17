@@ -23,10 +23,11 @@ module StringTransform
 
 	# This simple formatter deletes every character from the string, which is usually
 	# not used in texts. Also it purges ?!. and prepares the string to get split
-	# into single words. For a far better experience, use the format_interpunctuation
-	# method first!
-	def format_remove_non_letters str
-		new_str = str.dup
+	# into single words. For a far better experience, set the <code>:format</code> flag to true (this
+	# will use the format_interpunctuation method before processing)
+	def format_remove_non_letters str, flags={}
+		format = flags[:format] || flags['format'] || false
+		new_str = format ? format_interpunctuation(str) : str.dup
 		new_str.gsub!(/[^\w|öäüÖÄÜß|\ |\'|\"']/,'')
 		new_str
 	end
@@ -42,10 +43,10 @@ module StringTransform
 	end
 
 	# This method is exspecially useful for longer texts. You can break this text up into nice
-	# sentences. It makes sense that you use the <code>format_interpunctuation</code> method before
-	# calling this method, or just set the <code>:format</code> flag to true.
+	# sentences. If you set the <code>:format</code> flag to true, the format_interpunctuation method
+	# will be used before splitting to get often better results! 
 	def split_to_sentences str, flags={}
-		style = flags[:format] || flags['format'] || false
+		format = flags[:format] || flags['format'] || false
 		str = format_interpunctuation(str) if format
 		string_with_separators = str.gsub(/([\.|\!|\?])\ /) { "#{$1}[*!*breakpoint*!*]" }
 		@sentences = string_with_separators.split("[*!*breakpoint*!*]")
