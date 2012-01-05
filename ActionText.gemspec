@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{ActionText}
-  s.version = "0.1.0"
+  s.name = "ActionText"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = [%q{Maximilian Stroh}]
-  s.date = %q{2011-12-17}
-  s.description = %q{still under construction!}
-  s.email = %q{hisako1337@gmail.com}
+  s.authors = ["Maximilian Stroh"]
+  s.date = "2012-01-05"
+  s.description = "still under construction!"
+  s.email = "hisako1337@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -52,15 +52,16 @@ Gem::Specification.new do |s|
     "lib/action_text/string_transform.rb",
     "lib/action_text/string_utility.rb",
     "test/helper.rb",
+    "test/test_compare_texts.rb",
     "test/test_inheritance.rb",
     "test/test_string_compare.rb",
     "test/test_string_utility.rb"
   ]
-  s.homepage = %q{http://github.com/Anonyfox/ActionText}
-  s.licenses = [%q{MIT}]
-  s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.6}
-  s.summary = %q{Extends Ruby's String Class with some useful methods für Texts.}
+  s.homepage = "http://github.com/Anonyfox/ActionText"
+  s.licenses = ["MIT"]
+  s.require_paths = ["lib"]
+  s.rubygems_version = "1.8.10"
+  s.summary = "Extends Ruby's String Class with some useful methods f\u{fc}r Texts."
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
