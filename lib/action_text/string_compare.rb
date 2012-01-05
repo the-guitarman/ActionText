@@ -1,29 +1,39 @@
 #encoding: utf-8
 
-# This Method implements the core comparisom functionality. You may use the both core methods
-# if you like, but the preferred way is to use a special method depending on the comparison
-# you want to do. General, the following keywords are known: 
-# - string #=> compare char by char
-# - word #=> compare word by word
-# - sentence (not yet implemented)
-# also, there is always the <code>relative</code> keyword you might set. For a detailed instruction
-# how the methods work in general, read the descriptions of compare and compare_relative. 
+# This Module implements the core comparison functionality.
 module StringCompare
 
-private
-	def compare str1, str2, separator=""
+	# some naming aliases for convenience usage
+	@@separators = {
+		word: ' ',
+		words: ' ',
+
+		string: '',
+		signs: '',
+		sign: '',
+		chars: '',
+		char: '',
+
+		sentence: '. ',
+		sentences: '. '
+	}
+
+	def compare str1, str2, separator
 		factor1 = compare_relative str1, str2, separator
 		factor2 = compare_relative str2, str1, separator
 		(factor1 + factor2) / 2
 	end
 
-	def compare_relative str1, str2, separator=""
+	def compare_relative str1, str2, separator
+		separator = @@separators[separator]
+		separator ||= ' '
 		counter = 0.0
 		chars = str2.split separator
-		chars.each {|c| counter += 1 if str1 =~ /#{Regexp.escape(c)}/ }
+		#puts chars.to_s
+		chars.each {|c| counter += 1 if str1.downcase =~ /(\s|^)#{Regexp.escape(c.downcase)}(\s|$)/i }
 		counter / chars.size
 	end
-
+=begin
 	# could be: 
 	# compare_(string|word|words)(_relative) str, str
 	def method_missing(method, *args)
@@ -42,5 +52,5 @@ private
 			compare(args[0], args[1], separator)
 		end
 	end
-
+=end
 end

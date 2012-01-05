@@ -18,9 +18,9 @@ class TestInheritanceOfActionText < Test::Unit::TestCase
 		str1 = "HelloWorld"
 		str2 = "Hi!!! Whats up??"
 		str3 = "As I said...you're a fool!!"
-		assert_equal("Hello. World", str1.to_text.clean)
-		assert_equal("Hi! Whats up?", str2.to_text.clean)
-		assert_equal("As I said... you're a fool!", str3.to_text.clean)
+		assert_equal("Hello. World", str1.to_text.text)
+		assert_equal("Hi! Whats up?", str2.to_text.text)
+		assert_equal("As I said... you're a fool!", str3.to_text.text)
 	end
 
 	def test_splitting_words
@@ -66,5 +66,20 @@ class TestInheritanceOfActionText < Test::Unit::TestCase
 		assert_equal( true, txt.includes_words?(str4, false))
 		assert_equal( true, txt.includes_words?(str5) )
 		assert_not_equal( true, txt.includes_words?(str5,false) )
+	end
+
+	def test_self_validation
+		str1 = "MyEmail@Example.com"
+		str2 = "WorstCase@Example.com"
+		str3 = "Mail@example"
+		str4 = "http://example.com"
+		str5 = "http://www.example.com"
+		str6 = "example.com"
+		assert_equal( true, str1.to_text.is_a_valid(:email) )
+		assert_equal( true, str2.to_text.is_a_valid(:email) )
+		assert_equal( false, str3.to_text.is_a_valid(:email) )
+		assert_equal( true, str4.to_text.is_a_valid(:url) )
+		assert_equal( true, str5.to_text.is_a_valid(:url) )
+		assert_equal( false, str6.to_text.is_a_valid(:url) )
 	end
 end

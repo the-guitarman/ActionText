@@ -22,14 +22,40 @@ end
 # - Ask the text if it is a valid type, eg. if it is a valid email-adress or url. 
 # - As this gem is developed for usage in Germany, of course the german 'umlauts' are handled
 #   naturally. 
+# Here's a sample code to show some features of ActionText: <code>
+# 	text_1 = 'Hello! this is a nice little sample text!'.to_text
+#   text_1.list_sentences #=> ['Hello!','This is a nice little sample text!']
+#   text_1.list_words #=> ['Hello','This','is','a','nice','little','sample','text']
+#   text_1.include? 'HELLO' #=> true
+# 	text_1.include? 'HELLO', ignore_case: false #=> false
+# 	text_1.include? 'text sample' #=> false
+#   text_1.include? 'text sample', separate_words: true #=> true
+# 	text_1.includes_words? 'nice little sample' #=> true
+#   text_1.words #=> 8 
+# 	text_1.sentences #=> 2
+# 	
+#   text_2 = 'This is uglyVery!ugly sentence!!!'.to_text
+#  	text_2.text #=> 'This is ugly. Very! ugly sentence!'
+# 	
+#   text_3 = 'AnEmailAdress@Example.com'.to_text
+# 	text_3.is_a_valid :email #=> true
+# 	text_3.is_a_valid :url #=> false
+# 	
+# 	text_4 = 'a <b>styled</b> text.'
+# 	text_4.remove_html #=> 'a styled text.'
+# 	
+# 	# the last method is also usable standalone: 
+# 	ActionText.remove_html 'a <b>styled</b> text.' #=> 'a styled text'
+#   </code>
 class ActionText
 	attr_accessor :string
-	attr_reader :clean, :words, :sentences
+	attr_reader :text, :words, :sentences
 	include StringTransform
 
 	# define some utility class methods through the eigenclass
 	class << self
 		include StringUtility
+		include StringCompare
 	end
 
 	# Create a new ActionText object with the given String. Optional you can set the 'format' flag
@@ -38,10 +64,10 @@ class ActionText
 	def initialize str, params={}
 		@string = str # the original given string
 		@format = params["format"] || params[:format] || true
-		@clean = format_interpunctuation(@string)
+		@text = format_interpunctuation(@string)
 		if @format
-			@_words = split_to_words @clean
-			@_sentences = split_to_sentences @clean
+			@_words = split_to_words @text
+			@_sentences = split_to_sentences @text
 		else
 			@_words = split_to_words @string
 			@_sentences = split_to_sentences @string
@@ -50,15 +76,16 @@ class ActionText
 		@sentences = @_sentences.size
 	end
 
-	# Transforms the ActionText object back to a usual String. If you set the clean-flag to true you
-	# will get the pretty formatted string, otherwise you will get exactly the string you used to
-	# create the ActionText object. default: true. 
-	def to_s clean=true
-		if clean
-			@clean.dup
-		else
-			@string.dup
-		end
+	# Synonym for my_action_text_object.string. Returns exactly the String which was used to 
+	# create this ActionText object. 
+	def to_s
+		@string
+	end
+
+	# returns the ActionText-object itself. Just a helper method for handling such objects like 
+	# they were strings.
+	def to_text
+		self
 	end
 
 	# returns an array of all the words in the text
@@ -69,6 +96,24 @@ class ActionText
 	# returns an array of all the sentences in the text
 	def list_sentences
 		@_sentences
+	end
+
+	# the core mathing method to get the factor of similarity between the current ActionText-object
+	# and a given string or, for a better result, another ActionText-object
+	def match str, flags={}
+		return 1.0 unless str
+		separator = (flags['by'] || flags[:by] || :words).to_sym
+		str1 = format_remove_non_letters @text
+		str2 = format_remove_non_letters str.to_text.text
+		self.class.compare str1, str2, separator
+	end
+
+	def match_relative str, flags={}
+		return 1.0 unless str
+		separator = (flags['by'] || flags[:by] || :words).to_sym
+		str1 = format_remove_non_letters @text
+		str2 = format_remove_non_letters str.to_text.text
+		self.class.compare_relative str1, str2, separator
 	end
 
 	# A mighty test method! It looks in the text and checks whether the given string is included
@@ -90,9 +135,9 @@ class ActionText
 	def includes_string? target, ignore_case=true
 		return false unless target && (target.kind_of?(String) || target.kind_of?(ActionText)) 
 		if ignore_case
-			@clean =~ /#{target}/i ? true : false
+			@text =~ /#{target}/i ? true : false
 		else
-			@clean =~ /#{target}/ ? true : false
+			@text =~ /#{target}/ ? true : false
 		end
 	end
 
@@ -102,10 +147,29 @@ class ActionText
 		words = split_to_words target, format: true
 		all_words_included = true
 		if ignore_case
-			words.each {|w| all_words_included = false unless @clean =~ /#{w}/i }
+			words.each {|w| all_words_included = false unless @text =~ /#{w}/i }
 		else
-			words.each {|w| all_words_included = false unless @clean =~ /#{w}/ }
+			words.each {|w| all_words_included = false unless @text =~ /#{w}/ }
 		end
 		all_words_included
+	end
+
+	# ask the text if it is a valid <code>type</code>, where type could be
+	# <code>:email</code> or <code>:url</code>. Sample: 
+	# 
+	# <code>"MyExample@example.com".to_text.is_a_valid :email #=> true</code>
+	def is_a_valid type=nil
+		return false unless type && type.respond_to?(:to_s)
+		self.class.send "validate_#{type}".to_sym, @string
+	end
+
+	# deletes all html-tags from the text
+	def remove_html
+		remove_html_tags @text
+	end
+
+	# removes every html-tag in the given string
+	def self.remove_html str
+		remove_html_tags str
 	end
 end

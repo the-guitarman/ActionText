@@ -26,7 +26,7 @@ module StringTransform
 	# into single words. For a far better experience, set the <code>:format</code> flag to true (this
 	# will use the format_interpunctuation method before processing)
 	def format_remove_non_letters str, flags={}
-		format = flags[:format] || flags['format'] || false
+		format = flags[:format] || flags['format'] || true
 		new_str = format ? format_interpunctuation(str) : str.dup
 		new_str.gsub!(/[^\w|öäüÖÄÜß|\ |\'|\"']/,'')
 		new_str
@@ -36,7 +36,7 @@ module StringTransform
 	# string into an array of single words. For way better results, use the format_interpunctuation
 	# first or set the <code>:format</code> flag to true.
 	def split_to_words str, flags={}
-		format = flags[:format] || flags['format'] || false
+		format = flags[:format] || flags['format'] || true
 		str = format_interpunctuation(str) if format
 		string_without_special_signs = format_remove_non_letters(str)
 		string_without_special_signs.split(" ")
