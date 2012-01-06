@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ActionText"
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maximilian Stroh"]
-  s.date = "2012-01-05"
+  s.date = "2012-01-06"
   s.description = "still under construction!"
   s.email = "hisako1337@gmail.com"
   s.extra_rdoc_files = [
@@ -54,6 +54,7 @@ Gem::Specification.new do |s|
     "test/helper.rb",
     "test/test_compare_texts.rb",
     "test/test_inheritance.rb",
+    "test/test_samples.rb",
     "test/test_string_compare.rb",
     "test/test_string_utility.rb"
   ]
