@@ -30,7 +30,11 @@ module StringCompare
 		counter = 0.0
 		chars = str2.split separator
 		#puts chars.to_s
-		chars.each {|c| counter += 1 if str1.downcase =~ /(\s|^)#{Regexp.escape(c.downcase)}(\s|$)/i }
+		if separator == ''
+			chars.each {|c| counter += 1 if str1 =~ /#{Regexp.escape(c)}/i }
+		elsif separator == ' '
+			chars.each {|c| counter += 1 if str1.downcase =~ /(\s|^)#{Regexp.escape(c.downcase)}(\s|$)/i }
+		end
 		counter / chars.size
 	end
 =begin

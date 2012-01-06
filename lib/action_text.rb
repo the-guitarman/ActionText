@@ -23,13 +23,12 @@ end
 # - As this gem is developed for usage in Germany, of course the german 'umlauts' are handled
 #   naturally. 
 # Here's a sample code to show some features of ActionText: <code>
-# 	text_1 = 'Hello! this is a nice little sample text!'.to_text
+# 	text_1 = 'Hello! This is a nice little sample text!'.to_text
 #   text_1.list_sentences #=> ['Hello!','This is a nice little sample text!']
 #   text_1.list_words #=> ['Hello','This','is','a','nice','little','sample','text']
 #   text_1.include? 'HELLO' #=> true
 # 	text_1.include? 'HELLO', ignore_case: false #=> false
 # 	text_1.include? 'text sample' #=> false
-#   text_1.include? 'text sample', separate_words: true #=> true
 # 	text_1.includes_words? 'nice little sample' #=> true
 #   text_1.words #=> 8 
 # 	text_1.sentences #=> 2
@@ -41,11 +40,11 @@ end
 # 	text_3.is_a_valid :email #=> true
 # 	text_3.is_a_valid :url #=> false
 # 	
-# 	text_4 = 'a <b>styled</b> text.'
+# 	text_4 = 'a <b>styled</b> text.'.to_text
 # 	text_4.remove_html #=> 'a styled text.'
 # 	
 # 	# the last method is also usable standalone: 
-# 	ActionText.remove_html 'a <b>styled</b> text.' #=> 'a styled text'
+# 	ActionText.remove_html 'a <b>styled</b> text.' #=> 'a styled text.'
 #   </code>
 class ActionText
 	attr_accessor :string
@@ -108,6 +107,7 @@ class ActionText
 		self.class.compare str1, str2, separator
 	end
 
+	# a simple subroutine for testing issues.
 	def match_relative str, flags={}
 		return 1.0 unless str
 		separator = (flags['by'] || flags[:by] || :words).to_sym
@@ -119,16 +119,12 @@ class ActionText
 	# A mighty test method! It looks in the text and checks whether the given string is included
 	# in the text. You can specify some special behaviour how the method should treat the given string
 	# by setting some flags to true/false. The current list of flags is: 
-	# - :roughly #=> is the string included in any form? setting this flag to true will ignore all other flags!
-	#   default: FALSE.
 	# - :ignore_case #=> tells the internal regexp's to test all case combinations, too. default: TRUE.
-	# - :separate_words #=> When true, the method will by words, NOT by signs!
-	# <b>ATTENTION</b> this method is not implemented until now!
 	def include? str=nil, flags={}
 		return false unless str && (str.kind_of?(String) || str.kind_of?(ActionText)) 
-		roughly = flags["roughly"] || flags[:roughly] || false #the master-flag
-		ignore_case = flags["ignore_case"] || flags[:ignore_case] || true
-		separate_words = flags["separate_words"] || flags[:separate_words] || false
+		ignore_case = flags["ignore_case"] || flags[:ignore_case]
+		ignore_case = true if ignore_case == nil
+		includes_string? str, ignore_case
 	end
 
 	# The most simple include case. Simply look if the given String is exactly included in the Text.
@@ -137,6 +133,7 @@ class ActionText
 		if ignore_case
 			@text =~ /#{target}/i ? true : false
 		else
+			puts @text
 			@text =~ /#{target}/ ? true : false
 		end
 	end
@@ -165,7 +162,7 @@ class ActionText
 
 	# deletes all html-tags from the text
 	def remove_html
-		remove_html_tags @text
+		self.class.remove_html_tags @text
 	end
 
 	# removes every html-tag in the given string
