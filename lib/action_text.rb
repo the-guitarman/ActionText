@@ -23,29 +23,50 @@ end
 # - As this gem is developed for usage in Germany, of course the german 'umlauts' are handled
 #   naturally. 
 # Here's a sample code to show some features of ActionText: <code>
-# 	text_1 = 'Hello! This is a nice little sample text!'.to_text
+#   text_1 = 'Hello! This is a nice little sample text!'.to_text
 #   text_1.list_sentences #=> ['Hello!','This is a nice little sample text!']
 #   text_1.list_words #=> ['Hello','This','is','a','nice','little','sample','text']
 #   text_1.include? 'HELLO' #=> true
-# 	text_1.include? 'HELLO', ignore_case: false #=> false
-# 	text_1.include? 'text sample' #=> false
-# 	text_1.includes_words? 'nice little sample' #=> true
+#   text_1.include? 'HELLO', ignore_case: false #=> false
+#   text_1.include? 'text sample' #=> false
+#   text_1.includes_words? 'nice little sample' #=> true
 #   text_1.words #=> 8 
-# 	text_1.sentences #=> 2
-# 	
+#   text_1.sentences #=> 2
+# </code>
+# <code>
 #   text_2 = 'This is uglyVery!ugly sentence!!!'.to_text
-#  	text_2.text #=> 'This is ugly. Very! ugly sentence!'
-# 	
+#   text_2.text #=> 'This is ugly. Very! ugly sentence!'
+# </code>
+# <code>
 #   text_3 = 'AnEmailAdress@Example.com'.to_text
-# 	text_3.is_a_valid :email #=> true
-# 	text_3.is_a_valid :url #=> false
-# 	
-# 	text_4 = 'a <b>styled</b> text.'.to_text
-# 	text_4.remove_html #=> 'a styled text.'
-# 	
-# 	# the last method is also usable standalone: 
-# 	ActionText.remove_html 'a <b>styled</b> text.' #=> 'a styled text.'
-#   </code>
+#   text_3.is_a_valid :email #=> true
+#   text_3.is_a_valid :url #=> false
+# </code>
+# <code>
+#   text_4 = 'a <b>styled</b> text.'.to_text
+#   text_4.remove_html #=> 'a styled text.'
+# </code>
+# the last method is also usable standalone: 
+# <code>
+#   ActionText.remove_html 'a <b>styled</b> text.' #=> 'a styled text.'
+# </code>
+# To check the similarity of two Strings or ActionText-objects, just use
+# the <code>match</code> method. You may set the size of the units you want to compare with the :by
+# parameter
+# - <code>by: 'chars'</code>
+# - <code>by: 'words'</code>
+# - <code>by: 'sentences'</code>
+# Depending on your choice the results are very different! The default case is <code>:words</code>,
+# which is very suitable for medium text sizes. Some samples: 
+# <code>
+#   txt = ActionText.new "This is a simple text."
+#	  str1 = "Completely different!"
+#   str2 = "Another simple text?"
+#   str3 = "This is a simple text"
+#   txt.match str1, by: 'words' #=> 0.0
+#   txt.match str2, by: 'words' #=> 8/15 or 0.533333333
+#   txt.match str3, by: 'words' #=> 1.0
+# </code>
 class ActionText
 	attr_accessor :string
 	attr_reader :text, :words, :sentences
@@ -162,13 +183,12 @@ class ActionText
 		remove_html_tags str
 	end
 
-	def force_newline type=:unix
+	def force_newline type = :unix
 		if type == :unix || type == 'unix'
 			@text.gsub! "\r\n","\n"
 		elsif type == :windows || type == 'windows'
 			@text.gsub! "\n","\r\n"
 		end
-		set_params
 	end
 
 private
