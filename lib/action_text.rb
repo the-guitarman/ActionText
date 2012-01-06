@@ -64,15 +64,7 @@ class ActionText
 		@string = str # the original given string
 		@format = params["format"] || params[:format] || true
 		@text = format_interpunctuation(@string)
-		if @format
-			@_words = split_to_words @text
-			@_sentences = split_to_sentences @text
-		else
-			@_words = split_to_words @string
-			@_sentences = split_to_sentences @string
-		end
-		@words = @_words.size
-		@sentences = @_sentences.size
+		set_params
 	end
 
 	# Synonym for my_action_text_object.string. Returns exactly the String which was used to 
@@ -169,4 +161,28 @@ class ActionText
 	def self.remove_html str
 		remove_html_tags str
 	end
+
+	def force_newline type=:unix
+		if type == :unix || type == 'unix'
+			@text.gsub! "\r\n","\n"
+		elsif type == :windows || type == 'windows'
+			@text.gsub! "\n","\r\n"
+		end
+		set_params
+	end
+
+private
+	def set_params
+		if @format
+			force_newline :unix
+			@_words = split_to_words @text
+			@_sentences = split_to_sentences @text
+		else
+			@_words = split_to_words @string
+			@_sentences = split_to_sentences @string
+		end
+		@words = @_words.size
+		@sentences = @_sentences.size
+	end
+
 end

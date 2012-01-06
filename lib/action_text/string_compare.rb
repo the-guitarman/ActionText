@@ -35,7 +35,9 @@ module StringCompare
 		elsif separator == ' '
 			chars.each {|c| counter += 1 if str1.downcase =~ /(\s|^)#{Regexp.escape(c.downcase)}(\s|$)/i }
 		end
-		counter / chars.size
+		result = counter / chars.size
+		result = 0.0 if result.nan?
+		result
 	end
 =begin
 	# could be: 
