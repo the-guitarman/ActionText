@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/Anonyfox/ActionText"
   gem.license = "MIT"
   gem.summary = %Q{Extends Ruby's String Class with some useful methods für Texts.}
-  gem.description = %Q{still under construction!}
+  gem.description = %Q{Extends Ruby's String Class with some useful methods für Texts. See the Project page or the Documentation for further details.}
   gem.email = "hisako1337@gmail.com"
   gem.authors = ["Maximilian Stroh"]
   # dependencies defined in Gemfile
