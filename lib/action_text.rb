@@ -15,12 +15,6 @@ class String
 		af.parse self
 	end
 
-	# Same as String.action_formatter, but changes the current String directly
-	def action_formatter! params={}
-		af = ActionFormatter.new params
-		self = af.parse self
-	end
-
 	# Initializes a new ActionComparer object with the given parameters, compare the current String 
 	# with the other String and returns the similarity factor (a float between 0.0 and 1.0). 
 	# See the ActionComparer class description for further informations. 

@@ -44,7 +44,7 @@ class ActionFormatter
 
 private
 	def do_replace_newlines
-		@tmp.gsub!("<br\s*\/?\s*>", @replace_newlines)
+		@tmp.gsub!(/<br\s*\/?\s*>/, @replace_newlines)
 		@tmp.gsub!("\r\n",@replace_newlines)
 		@tmp.gsub!("\r",@replace_newlines)
 		@tmp.gsub!("\n", @replace_newlines)
@@ -62,8 +62,8 @@ private
 	end
 
 	def do_ascii_art
-		if @format_headlines == "remove"
-			@tmp.gsub!(/[^\n\wäöüßÄÖÜ€]{4,}/, "")
+		if @ascii_art == "remove"
+			@tmp.gsub!(/[^\n\wäöüßÄÖÜ€\.]{4,}/, "")
 		end
 	end
 
