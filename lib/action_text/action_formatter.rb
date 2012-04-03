@@ -83,7 +83,7 @@ private
 		elsif @html_filter == "casual"
 			common_tags = []
 			common_tags << "br" << "h1" << "h2" << "h3" << "h4" <<"strong"
-			common_tags << "em" << "span" << "ol" <<"ul" << "li"
+			common_tags << "em" << "span" << "ol" <<"ul" << "li" << "p"
 			common_tags.each {|tag| @tmp.gsub!( /<\s*(\/?\s*#{tag}[^>]*)>/i){"___!!!#{$1}!!!___"} }
 			@tmp.gsub!(/<\/?[^>]*>/,'')
 			@tmp.gsub!(/___!!!(.*?)!!!___/) {"<#{$1}>"}
