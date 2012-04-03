@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ActionText"
-  s.version = "1.0.1"
+  s.version = "1.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maximilian Stroh"]
-  s.date = "2012-02-21"
+  s.date = "2012-04-03"
   s.description = "Extends Ruby's String Class with some useful methods f\u{fc}r Texts. See the Project page or the Documentation for further details."
   s.email = "hisako1337@gmail.com"
   s.extra_rdoc_files = [
