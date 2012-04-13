@@ -63,7 +63,7 @@ private
 
 	def do_ascii_art
 		if @ascii_art == "remove"
-			@tmp.gsub!(/[^\n\wäöüßÄÖÜ€\.]{4,}/, "")
+			@tmp.gsub!(/[^\n\wäöüßÄÖÜ€\.\s]{4,}/, "")
 		end
 	end
 
