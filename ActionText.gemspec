@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maximilian Stroh"]
-  s.date = "2012-04-03"
+  s.date = "2012-04-13"
   s.description = "Extends Ruby's String Class with some useful methods f\u{fc}r Texts. See the Project page or the Documentation for further details."
   s.email = "hisako1337@gmail.com"
   s.extra_rdoc_files = [
