@@ -16,11 +16,11 @@ class String
 	end
 
 	# Initializes a new ActionComparer object with the given parameters, compare the current String 
-	# with the other String and returns the similarity factor (a float between 0.0 and 1.0). 
+	# with the other String and returns true or false, depending on the calculated similarity. 
 	# See the ActionComparer class description for further informations. 
 	def action_comparer other_text="", params={}
 		ac = ActionComparer.new params
-		ac.compare_pair self, other
+		ac.similar? self, other_text
 	end
 
 	# Initializes a new AcionComparer object with the given parameters to compare the current String with
@@ -28,7 +28,7 @@ class String
 	# allowed. See the Class definition for further informations.
 	def action_comparer_many other_texts=[], params={}
 		ac = ActionComparer.new params
-		ac.compare_many self, other_texts
+		ac.too_similar_texts self, other_texts
 	end
 end
 

@@ -40,7 +40,7 @@ class TestActionFormatter < Test::Unit::TestCase
 		af.ascii_art = "remove"
 		str1 = "!!!!!!!! Call me now !!!!!!!\n"
 		str2 = af.parse str1
-		assert_equal("Call me now\n", str2)
+		assert_equal(" Call me now \n", str2)
 	end
 
 	def test_html_optimize

@@ -68,10 +68,10 @@ private
 	end
 
 	def do_html_optimize
-		if @html_optimize == "all" || @html_optimize == "b"
+		if @html_optimize == "all" || @html_optimize == "i"
 			@tmp.gsub!(/<\s*(\/?)\s*i([^>]*)>/) {"<#{$1}em#{$2}>"}
 		end
-		if @html_optimize == "all" || @html_optimize == "i"
+		if @html_optimize == "all" || @html_optimize == "b"
 			@tmp.gsub!(/<\s*(\/?)\s*b((?:[^r>][^>]*)?)>/) {"<#{$1}strong#{$2}>"}
 		end
 	end
