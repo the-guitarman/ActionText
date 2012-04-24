@@ -31,6 +31,9 @@ module SimilarityChecker
     # translate to soundex-codes and compare
     ary1 = tmp1.map{|word| soundex(word)}.uniq
     ary2 = tmp2.map{|word| soundex(word)}.uniq
+    size1 = ary1.size
+    size2 = ary2.size
+    average_size = (size1 + size2) / 2.0
     difference = (ary1 - ary2).size
 
     # rate the difference

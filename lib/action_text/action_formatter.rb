@@ -16,6 +16,10 @@
 #   af = ActionFormatter.new
 #   af.replace_newlines = "<br/>"
 #   nice_text = af.parse(ugly_text)
+# There is also the possibility to define your own HTML-Tags as "casual" tags, simply give
+# the :html_filter attribute an Array of Strings containing your desired tags, instead of 
+# "all", "none", "casual". In Addition, you may give it also a String with a commaseparated
+# list of tags. 
 class ActionFormatter
 	attr_accessor :replace_newlines, :format_headlines, :ascii_art
 	attr_accessor :html_optimize, :html_filter
@@ -80,14 +84,24 @@ private
 	def do_html_filter
 		if @html_filter == "all"
 			@tmp.gsub!(/<\/?[^>]*>/,'')
+		
 		elsif @html_filter == "casual"
-			common_tags = []
-			common_tags << "br" << "h1" << "h2" << "h3" << "h4" <<"strong"
-			common_tags << "em" << "span" << "ol" <<"ul" << "li" << "p"
-			common_tags.each {|tag| @tmp.gsub!( /<\s*(\/?\s*#{tag}[^>]*)>/i){"___!!!#{$1}!!!___"} }
-			@tmp.gsub!(/<\/?[^>]*>/,'')
-			@tmp.gsub!(/___!!!(.*?)!!!___/) {"<#{$1}>"}
+			common_tags = %w( br h1 h2 h3 h4 strong em span ol ul li p )
+			html_tag_reduce_helper common_tags
+		
+		elsif @html_filter != "none"
+			if @html_filter.kind_of? Array
+				html_tag_reduce_helper @html_filter
+			elsif @html_filter.kind_of? String
+				html_tag_reduce_helper @html_filter.split(",")
+			end
 		end
+	end
+
+	def html_tag_reduce_helper tag_array
+		tag_array.each {|tag| @tmp.gsub!( /<\s*(\/?\s*#{tag}[^>]*)>/i){"___!!!#{$1}!!!___"} }
+		@tmp.gsub!(/<\/?[^>]*>/,'')
+		@tmp.gsub!(/___!!!(.*?)!!!___/) {"<#{$1}>"}
 	end
 
 end
