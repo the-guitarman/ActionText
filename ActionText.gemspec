@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{ActionText}
-  s.version = "1.1.0"
+  s.name = "ActionText"
+  s.version = "1.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maximilian Stroh"]
-  s.date = %q{2012-04-22}
-  s.description = %q{Extends Ruby's String Class with some useful methods für Texts. See the Project page or the Documentation for further details.}
-  s.email = %q{hisako1337@gmail.com}
+  s.date = "2012-04-24"
+  s.description = "Extends Ruby's String Class with some useful methods f\u{fc}r Texts. See the Project page or the Documentation for further details."
+  s.email = "hisako1337@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README",
@@ -36,14 +36,13 @@ Gem::Specification.new do |s|
     "test/test_action_formatter.rb",
     "test/test_string_integration.rb"
   ]
-  s.homepage = %q{http://github.com/Anonyfox/ActionText}
+  s.homepage = "http://github.com/Anonyfox/ActionText"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Extends Ruby's String Class with some useful methods für Texts.}
+  s.rubygems_version = "1.8.10"
+  s.summary = "Extends Ruby's String Class with some useful methods f\u{fc}r Texts."
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
