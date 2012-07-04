@@ -55,6 +55,6 @@ class TestActionFormatter < Test::Unit::TestCase
 		af = ActionFormatter.new
 		str1 = "This <b>is <u>a</b> Text!</u>"
 		str2 = af.parse str1
-		assert_equal("This <strong>is a</strong> Text!", str2)
+		assert_equal("This <strong>is  a</strong> Text! ", str2)
 	end
 end
