@@ -83,7 +83,7 @@ private
 	# ToDo: let the user modify the casual tags
 	def do_html_filter
 		if @html_filter == "all"
-			@tmp.gsub!(/<\/?[^>]*>/,'')
+			@tmp.gsub!(/<\/?[^>]*>/,' ')
 		
 		elsif @html_filter == "casual"
 			common_tags = %w( br h1 h2 h3 h4 strong em span ol ul li p )
@@ -100,7 +100,7 @@ private
 
 	def html_tag_reduce_helper tag_array
 		tag_array.each {|tag| @tmp.gsub!( /<\s*(\/?\s*#{tag}[^>]*)>/i){"___!!!#{$1}!!!___"} }
-		@tmp.gsub!(/<\/?[^>]*>/,'')
+		@tmp.gsub!(/<\/?[^>]*>/,' ')
 		@tmp.gsub!(/___!!!(.*?)!!!___/) {"<#{$1}>"}
 	end
 
