@@ -10,11 +10,11 @@ module SimilarityChecker
   def check text1, text2
     # Need the AF class to prepare the texts for splitting into words
     af = ActionFormatter.new({
-      replace_newlines: " ",
-      format_headlines: "none",
-      ascii_art: "none",
-      html_optimize: "none",
-      html_filter: "all"
+      replace_newlines => " ",
+      format_headlines => "none",
+      ascii_art => "none",
+      html_optimize => "none",
+      html_filter => "all"
     })
 
     # clean from html-tags, non-words, and split into an array of unique words
