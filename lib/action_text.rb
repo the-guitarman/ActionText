@@ -1,7 +1,7 @@
 # encoding: utf-8
 
-require_relative 'action_text/action_formatter'
-require_relative 'action_text/action_comparer'
+require 'action_text/action_formatter'
+require 'action_text/action_comparer'
 
 # Just a little tweak for convenience usage. Extend the String class with some shorthand methods
 # to use ActionFormatter and ActionComparer without explicit need for instancing that classes. 

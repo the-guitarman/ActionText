@@ -1,6 +1,6 @@
 #encoding: utf-8
 
-require_relative 'similarity_checker'
+require 'action_text/similarity_checker'
 
 # This is a factory-class. Instance it, adjust your settings, and then fire your Texts through it!
 # You may set the parameters when you instance, by giving it a params-hash with the following structure: 
